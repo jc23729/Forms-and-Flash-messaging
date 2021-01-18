@@ -14,4 +14,15 @@ class InfoForm(FlaskForm):
   submit = SubmitField('Submit')
 
 @app.route('/', methods = ['GET', 'POST'])
+def index():
+  form = InfoForm()
+  if form.validate_on_submit():
+    session['breed'] = form.breed.data
+    flask(f" You just changed your breed to:{session['breed']}")
+    return redirect(url_for("index"))
+
+return render_template('03-home.html', form=form)
+
+if __name__ == '__main__':
+  app.run(debug=True)
 
